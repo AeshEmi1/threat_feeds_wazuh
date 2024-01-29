@@ -1,0 +1,489 @@
+<group name="threat_feeds,threat_feeds_inbound,">
+    <rule id="970000" level="12" ignore="300">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="srcip" lookup="address_match_key">etc/lists/open_proxies</list>
+      <description>Accepted connection from an open proxy detected.</description>
+    </rule>
+
+    <rule id="970001" level="6">
+      <if_sid>91531</if_sid>
+      <list field="office365.SenderIp" lookup="address_match_key">etc/lists/open_proxies</list>
+      <description>Office 365: Mail from an open proxy detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970002" level="12" ignore="65">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIP" lookup="address_match_key">etc/lists/open_proxies</list>
+      <field name="office365.Operation">UserLoggedIn</field>
+      <description>Office 365: Successful login from an open proxy.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970003" level="12" ignore="600">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIP" lookup="address_match_key">etc/lists/open_proxies</list>
+      <field name="office365.Operation">!UserLoggedIn</field>
+      <description>Office 365: Activity from an open proxy detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970004" level="12" ignore="600">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIPAddress" lookup="address_match_key">etc/lists/open_proxies</list>
+      <description>Office 365: Activity from an open proxy detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970005" level="12" ignore="65">
+      <if_sid>301000</if_sid>
+      <list field="fortinet.remip" lookup="address_match_key">etc/lists/open_proxies</list>
+      <description>Fortinet: Connection/Login from an open proxy detected.</description>
+      <group>Fortinet,</group>
+    </rule>
+
+    <rule id="970006" level="12" ignore="600">
+      <if_sid>60000</if_sid>
+      <list field="win.eventdata.ipAddress" lookup="address_match_key">etc/lists/open_proxies</list>
+      <description>Windows: Connection from an open proxy detected. If the IP address is a private IP, then this is a false positive.</description>
+      <group>windows,</group>
+    </rule>
+
+    <rule id="970020" level="12" ignore="300">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="srcip" lookup="address_match_key">etc/lists/datacenters_and_vpns</list>
+
+      <description>Accepted connection from a datacenter or VPN detected.</description>
+    </rule>
+
+    <rule id="970021" level="6">
+      <if_sid>91531</if_sid>
+      <list field="office365.SenderIp" lookup="address_match_key">etc/lists/datacenters_and_vpns</list>
+
+      <description>Office 365: Mail from a datacenter or VPN detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970022" level="12" ignore="65">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIP" lookup="address_match_key">etc/lists/datacenters_and_vpns</list>
+      <field name="office365.Operation">UserLoggedIn</field>
+
+      <description>Office 365: Successful login from a datacenter or VPN detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970023" level="12" ignore="600">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIP" lookup="address_match_key">etc/lists/datacenters_and_vpns</list>
+
+      <field name="office365.Operation">!UserLoggedIn</field>
+      <description>Office 365: Activity from a datacenter or VPN detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970024" level="12" ignore="600">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIPAddress" lookup="address_match_key">etc/lists/datacenters_and_vpns</list>
+
+      <description>Office 365: Activity from a datacenter or VPN detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970025" level="12" ignore="65">
+      <if_sid>301000</if_sid>
+      <list field="fortinet.remip" lookup="address_match_key">etc/lists/datacenters_and_vpns</list>
+
+      <description>Fortinet: Connection/Login from a datacenter or VPN detected.</description>
+      <group>Fortinet,</group>
+    </rule>
+
+    <rule id="970026" level="12" ignore="600">
+      <if_sid>60000</if_sid>
+      <list field="win.eventdata.ipAddress" lookup="address_match_key">etc/lists/datacenters_and_vpns</list>
+
+      <description>Windows: Connection from a datacenter or VPN detected. If the IP address is a private IP, then this is a false positive.</description>
+      <group>windows,</group>
+    </rule>
+
+    <rule id="970040" level="12" ignore="300">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="srcip" lookup="address_match_key">etc/lists/firehol_level3</list>
+      <description>FireHOL's Level 3 Threat Feed - Accepted connection from a malicious IP detected.</description>
+    </rule>
+
+    <rule id="970041" level="6">
+      <if_sid>91531</if_sid>
+      <list field="office365.SenderIp" lookup="address_match_key">etc/lists/firehol_level3</list>
+      <description>Office 365: FireHOL's Level 3 Threat Feed - Mail from a malicious IP detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970042" level="12" ignore="65">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIP" lookup="address_match_key">etc/lists/firehol_level3</list>
+      <field name="office365.Operation">UserLoggedIn</field>
+      <description>Office 365: FireHOL's Level 3 Threat Feed - Successful login from a malicious IP detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970043" level="12" ignore="600">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIP" lookup="address_match_key">etc/lists/firehol_level3</list>
+      <field name="office365.Operation">!UserLoggedIn</field>
+      <description>Office 365: FireHOL's Level 3 Threat Feed - Connection from a malicious IP detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970044" level="12" ignore="600">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIPAddress" lookup="address_match_key">etc/lists/firehol_level3</list>
+      <description>Office 365: FireHOL's Level 3 Threat Feed - Connection from a malicious IP detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970045" level="12" ignore="65">
+      <if_sid>301000</if_sid>
+      <list field="fortinet.remip" lookup="address_match_key">etc/lists/firehol_level3</list>
+      <description>Fortinet: FireHOL's Level 3 Threat Feed - Connection/Login from a malicious IP detected.</description>
+      <group>Fortinet,</group>
+    </rule>
+
+    <rule id="970046" level="12" ignore="600">
+      <if_sid>60000</if_sid>
+      <list field="win.eventdata.ipAddress" lookup="address_match_key">etc/lists/firehol_level3</list>
+      <description>Windows: FireHOL's Level 3 Threat Feed - Connection from a malicious IP detected. If the IP address is a private IP, then this is a false positive.</description>
+      <group>windows,</group>
+    </rule>
+
+    <rule id="970060" level="12" ignore="300">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="srcip" lookup="address_match_key">etc/lists/firehol_level2</list>
+      <description>FireHOL's Level 2 Threat Feed - Accepted connection from a malicious IP detected.</description>
+    </rule>
+
+    <rule id="970061" level="6">
+      <if_sid>91531</if_sid>
+      <list field="office365.SenderIp" lookup="address_match_key">etc/lists/firehol_level2</list>
+      <description>Office 365: FireHOL's Level 2 Threat Feed - Mail from a malicious IP detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970062" level="12" ignore="65">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIP" lookup="address_match_key">etc/lists/firehol_level2</list>
+      <field name="office365.Operation">UserLoggedIn</field>
+      <description>Office 365: FireHOL's Level 2 Threat Feed - Successful login from a malicious IP detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970063" level="12" ignore="600">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIP" lookup="address_match_key">etc/lists/firehol_level2</list>
+      <field name="office365.Operation">!UserLoggedIn</field>
+      <description>Office 365: FireHOL's Level 2 Threat Feed - Connection from a malicious IP detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970064" level="12" ignore="600">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIPAddress" lookup="address_match_key">etc/lists/firehol_level2</list>
+      <description>Office 365: FireHOL's Level 2 Threat Feed - Connection from a malicious IP detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970065" level="12" ignore="65">
+      <if_sid>301000</if_sid>
+      <list field="fortinet.remip" lookup="address_match_key">etc/lists/firehol_level2</list>
+      <description>Fortinet: FireHOL's Level 2 Threat Feed - Connection/Login from a malicious IP detected.</description>
+      <group>Fortinet,</group>
+    </rule>
+
+    <rule id="970066" level="12" ignore="600">
+      <if_sid>60000</if_sid>
+      <list field="win.eventdata.ipAddress" lookup="address_match_key">etc/lists/firehol_level2</list>
+      <description>Windows: FireHOL's Level 2 Threat Feed - Connection from a malicious IP detected. If the IP address is a private IP, then this is a false positive.</description>
+      <group>windows,</group>
+    </rule>
+
+    <rule id="970080" level="12" ignore="300">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="srcip" lookup="address_match_key">etc/lists/alienvault_reputation</list>
+      <description>Alienvault Threat Feed - Accepted connection from a malicious IP detected.</description>
+    </rule>
+
+    <rule id="970081" level="6">
+      <if_sid>91531</if_sid>
+      <list field="office365.SenderIp" lookup="address_match_key">etc/lists/alienvault_reputation</list>
+      <description>Office 365: Alienvault Threat Feed - Mail from a malicious IP detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970082" level="12" ignore="65">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIP" lookup="address_match_key">etc/lists/alienvault_reputation</list>
+      <field name="office365.Operation">UserLoggedIn</field>
+      <description>Office 365: Alienvault Threat Feed - Successful login from a malicious IP detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970083" level="12" ignore="600">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIP" lookup="address_match_key">etc/lists/alienvault_reputation</list>
+      <field name="office365.Operation">!UserLoggedIn</field>
+      <description>Office 365: Alienvault Threat Feed - Connection from a malicious IP detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970084" level="12" ignore="600">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIPAddress" lookup="address_match_key">etc/lists/alienvault_reputation</list>
+      <description>Office 365: Alienvault Threat Feed - Connection from a malicious IP detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970085" level="12" ignore="65">
+      <if_sid>301000</if_sid>
+      <list field="fortinet.remip" lookup="address_match_key">etc/lists/alienvault_reputation</list>
+      <description>Fortinet: Alienvault Threat Feed - Connection/Login from a malicious IP detected.</description>
+      <group>Fortinet,</group>
+    </rule>
+
+    <rule id="970086" level="12" ignore="600">
+      <if_sid>60000</if_sid>
+      <list field="win.eventdata.ipAddress" lookup="address_match_key">etc/lists/alienvault_reputation</list>
+      <description>Windows: Alienvault Threat Feed - Connection from a malicious IP detected. If the IP address is a private IP, then this is a false positive.</description>
+      <group>windows,</group>
+    </rule>
+
+    <rule id="970100" level="12" ignore="300">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="srcip" lookup="address_match_key">etc/lists/tor_exits_7d</list>
+      <description>Accepted connection from a TOR exit node detected.</description>
+    </rule>
+
+    <rule id="970101" level="6">
+      <if_sid>91531</if_sid>
+      <list field="office365.SenderIp" lookup="address_match_key">etc/lists/tor_exits_7d</list>
+      <description>Office 365: Mail from a TOR exit node detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970102" level="12" ignore="65">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIP" lookup="address_match_key">etc/lists/tor_exits_7d</list>
+      <field name="office365.Operation">UserLoggedIn</field>
+      <description>Office 365: Successful login from a TOR exit node detected.</description>
+    </rule>
+
+    <rule id="970103" level="12" ignore="600">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIP" lookup="address_match_key">etc/lists/tor_exits_7d</list>
+      <field name="office365.Operation">!UserLoggedIn</field>
+      <description>Office 365: Activity from a TOR exit node detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970104" level="12" ignore="600">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIPAddress" lookup="address_match_key">etc/lists/tor_exits_7d</list>
+      <description>Office 365: Activity from a TOR exit node detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970105" level="12" ignore="65">
+      <if_sid>301000</if_sid>
+      <list field="fortinet.remip" lookup="address_match_key">etc/lists/tor_exits_7d</list>
+      <description>Fortinet: Connection/Login from a TOR exit node detected.</description>
+      <group>Fortinet,</group>
+    </rule>
+
+    <rule id="970106" level="12" ignore="600">
+      <if_sid>60000</if_sid>
+      <list field="win.eventdata.ipAddress" lookup="address_match_key">etc/lists/tor_exits_7d</list>
+      <description>Windows: Connection from a TOR exit node detected. If the IP address is a private IP, then this is a false positive.</description>
+      <group>windows,</group>
+    </rule>
+
+    <rule id="970120" level="15" ignore="300">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="srcip" lookup="address_match_key">etc/lists/c2</list>
+      <description>Accepted connection from a known C2 server detected.</description>
+    </rule>
+
+    <rule id="970121" level="6">
+      <if_sid>91531</if_sid>
+      <list field="office365.SenderIp" lookup="address_match_key">etc/lists/c2</list>
+      <description>Office 365: Mail from a known C2 server detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970122" level="15" ignore="65">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIP" lookup="address_match_key">etc/lists/c2</list>
+      <field name="office365.Operation">UserLoggedIn</field>
+      <description>Office 365: Successful login from a known C2 server detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970123" level="15" ignore="600">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIP" lookup="address_match_key">etc/lists/c2</list>
+      <field name="office365.Operation">!UserLoggedIn</field>
+      <description>Office 365: Activity from a known C2 server detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970124" level="15" ignore="600">
+      <if_sid>91531</if_sid>
+      <list field="office365.ClientIPAddress" lookup="address_match_key">etc/lists/c2</list>
+      <description>Office 365: Activity from a known C2 server detected.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="970125" level="15" ignore="65">
+      <if_sid>301000</if_sid>
+      <list field="fortinet.remip" lookup="address_match_key">etc/lists/c2</list>
+      <description>Fortinet: Connection/Login from a known C2 server detected.</description>
+      <group>Fortinet,</group>
+    </rule>
+
+    <rule id="970126" level="15" ignore="600">
+      <if_sid>60000</if_sid>
+      <list field="win.eventdata.ipAddress" lookup="address_match_key">etc/lists/c2</list>
+      <description>Windows: Connection from a known C2 server detected. If the IP address is a private IP, then this is a false positive.</description>
+      <group>windows,</group>
+    </rule>
+</group>
+
+<group name="threat_feeds,threat_feeds_outbound,">
+    <rule id="970500" level="6">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="dstip" lookup="address_match_key">etc/lists/open_proxies</list>
+      <description>Connection to an open proxy detected.</description>
+    </rule>
+
+    <rule id="970501" level="6">
+    <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="dstip" lookup="address_match_key">etc/lists/firehol_level3</list>
+      <description>Connection to a malicious IP found in FireHOL's level 3 threat feed detected.</description>
+    </rule>
+
+    <rule id="970502" level="6">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="dstip" lookup="address_match_key">etc/lists/datacenters</list>
+      <description>Connection to a datacenter or VPN IP detected.</description>
+    </rule>
+
+    <rule id="970503" level="12">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="dstip" lookup="address_match_key">etc/lists/china</list>
+      <description>Connection to China detected.</description>
+    </rule>
+
+    <rule id="970504" level="12">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="dstip" lookup="address_match_key">etc/lists/russia</list>
+      <description>Connection to Russia detected.</description>
+    </rule>
+
+    <rule id="970505" level="12">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="dstip" lookup="address_match_key">etc/lists/iran</list>
+      <description>Connection to Iran detected.</description>
+    </rule>
+
+    <rule id="970506" level="12">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="dstip" lookup="address_match_key">etc/lists/north_korea</list>
+      <description>Connection to North Korea detected.</description>
+    </rule>
+
+    <rule id="970750" level="15">
+    <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="dstip" lookup="address_match_key">etc/lists/firehol_level2</list>
+      <description>Connection to a malicious IP found in Firehol's level 2 threat feed detected.</description>
+    </rule>
+
+    <rule id="970751" level="15">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="dstip" lookup="address_match_key">etc/lists/alienvault_reputation</list>
+      <description>Connection to a malicious IP found in Alienvault's threat feed detected.</description>
+    </rule>
+
+    <rule id="970752" level="15">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="dstip" lookup="address_match_key">etc/lists/tor_exits_7d</list>
+      <description>Connection to a TOR exit node detected.</description>
+    </rule>
+
+    <rule id="970753" level="15">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="dstip" lookup="address_match_key">etc/lists/c2</list>
+      <description>Connection to a known C2 server detected.</description>
+    </rule>
+</group>
+
+<group name="threat_feeds,threat_feed_overrides,">
+    <rule id="971000" level="6">
+      <if_group>threat_feeds_inbound</if_group>
+      <field name="fortinet.destination_port">10443</field>
+      <description>Fortinet: Malicious connection to the VPN portal or web console login page.</description>
+      <group>Fortinet,</group>
+    </rule>
+
+    <rule id="971001" level="6">
+      <if_group>threat_feeds_inbound</if_group>
+      <field name="fortinet.action">block|deny|close|ssl-new-con|dropped</field>
+      <description>Fortinet: Attack from malicious IP Blocked.</description>
+      <group>Fortinet,</group>
+    </rule>
+
+    <rule id="971002" level="6">
+      <if_group>threat_feeds_inbound</if_group>
+      <field name="fortinet.service">PING</field>
+      <description>Fortinet: Ping from malicious IP.</description>
+      <group>Fortinet,</group>
+    </rule>
+
+    <rule id="971003" level="6">
+      <if_group>threat_feeds_inbound</if_group>
+      <field name="fortinet.action">ssl-login-fail</field>
+      <description>Fortinet: VPN login failure from a malicious IP Blocked.</description>
+      <group>Fortinet,</group>
+    </rule>
+
+    <rule id="971004" level="6">
+      <if_group>threat_feeds_inbound</if_group>
+      <field name="fortinet.level">error</field>
+      <description>Fortinet: Malicious IP generated an Error.</description>
+      <group>Fortinet,</group>
+    </rule>
+
+    <rule id="971005" level="6">
+      <if_group>threat_feeds_inbound</if_group>
+      <field name="fortinet.action">ip-conn|client-rst|server-rst|timeout</field>
+      <description>Fortinet: Protocol errors from a Malicious IP.</description>
+      <group>Fortinet,</group>
+    </rule>
+
+    <rule id="971006" level="6">
+      <if_group>threat_feeds_inbound</if_group>
+      <field name="office365.Operation">UserLoginFailed</field>
+      <description>Office 365: Login Failure from malicious IP.</description>
+      <group>office365,</group>
+    </rule>
+
+    <rule id="971007" level="12" ignore="65">
+      <if_group>971006</if_group>
+      <field name="office365.LogonError">UserStrongAuthClientAuthNRequiredInterrupt</field>
+      <description>Office 365: Login attempt from a malicious IP thwarted by MFA.</description>
+      <group>office365,threat_feeds_inbound,</group>
+    </rule>
+    
+    <rule id="971008" level="6">
+      <if_group>threat_feeds_inbound</if_group>
+      <field name="office365.policy_type">local-in-policy</field>
+      <description>Temporary local-in policy override.</description>
+    </rule>
+</group>

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Be sure to edit ossec.conf MANUALLY
+# Be sure that the lists are in ossec.conf (ossec_updater takes care of this (in first run cases))
 # Download latest IP Reputation lists
 curl https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxylists_7d.ipset -o /var/ossec/etc/lists/open_proxies.ipset
 curl https://raw.githubusercontent.com/X4BNet/lists_vpn/main/output/datacenter/ipv4.txt -o /var/ossec/etc/lists/datacenters_and_vpns.ipset
@@ -69,21 +69,6 @@ chown wazuh:wazuh /var/ossec/etc/lists/china
 chown wazuh:wazuh /var/ossec/etc/lists/russia
 chown wazuh:wazuh /var/ossec/etc/lists/iran
 chown wazuh:wazuh /var/ossec/etc/lists/north_korea
-
-# Add list locations to array
-beginning_instructions="<list>etc/lists/"
-list_names=("open_proxies" "datacenters_and_vpns" "firehol_level3" "firehol_level2" "alienvault_reputation" "tor_exits_7d" "c2" "china" "russia" "iran" "north_korea")
-end_instructions="</list>"
-
-# Instructions
-add_to_ossec="    <!-- Threat Feed Lists -->\n"
-for instruction in ${list_names[@]}; do
-add_to_ossec+="    $beginning_instructions$instruction$end_instructions\n"
-done
-
-cp /var/ossec/etc/ossec.conf /var/ossec/etc/ossec.conf.bak
-sed "/<ruleset>/a \\$add_to_ossec" /var/ossec/etc/ossec.conf > /var/ossec/etc/ossec.conf.tmp
-mv /var/ossec/etc/ossec.conf.tmp /var/ossec/etc/ossec.conf
 
 # restart wazuh to apply changes
 systemctl restart wazuh-manager

@@ -76,14 +76,14 @@ list_names=("open_proxies" "datacenters_and_vpns" "firehol_level3" "firehol_leve
 end_instructions="</list>"
 
 # Instructions
-add_to_ossec=""
+add_to_ossec="    <!-- Threat Feed Lists -->\n"
 for instruction in ${list_names[@]}; do
-add_to_ossec+="$beginning_instructions$instruction$end_instructions\n"
+add_to_ossec+="    $beginning_instructions$instruction$end_instructions\n"
 done
 
 cp /var/ossec/etc/ossec.conf /var/ossec/etc/ossec.conf.bak
-
-sed "/<ruleset>/a \\\t$add_this" /var/ossec/etc/ossec.conf > /var/ossec/etc/ossec.conf
+sed "/<ruleset>/a \\$add_to_ossec" /var/ossec/etc/ossec.conf > /var/ossec/etc/ossec.conf.tmp
+mv /var/ossec/etc/ossec.conf.tmp /var/ossec/etc/ossec.conf
 
 # restart wazuh to apply changes
 systemctl restart wazuh-manager

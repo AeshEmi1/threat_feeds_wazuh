@@ -1,5 +1,4 @@
 #!/bin/bash
-# Be sure that the lists are in ossec.conf (ossec_updater takes care of this (in first run cases))
 # Download latest IP Reputation lists
 curl https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxylists_7d.ipset -o /var/ossec/etc/lists/open_proxies.ipset
 curl https://raw.githubusercontent.com/X4BNet/lists_vpn/main/output/datacenter/ipv4.txt -o /var/ossec/etc/lists/datacenters_and_vpns.ipset
@@ -69,6 +68,23 @@ chown wazuh:wazuh /var/ossec/etc/lists/china
 chown wazuh:wazuh /var/ossec/etc/lists/russia
 chown wazuh:wazuh /var/ossec/etc/lists/iran
 chown wazuh:wazuh /var/ossec/etc/lists/north_korea
+
+# Add list locations to array
+beginning_instructions="<list>etc/lists/"
+list_names=($(ls /var/ossec/etc/lists | grep -v cdb | grep -v amazon | grep -v audit-keys | grep -v security-eventchannel))
+end_instructions="</list>"
+
+# Instructions
+add_to_ossec="    <!-- Threat Feed Lists -->\n"
+for instruction in ${list_names[@]}; do
+add_to_ossec+="    $beginning_instructions$instruction$end_instructions\n"
+done
+add_to_ossec+="    <!-- Threat Feed Lists END -->"
+
+if [ $(grep -c '<!-- Threat Feed Lists -->' "/var/ossec/etc/ossec.conf") -ge 1 ]; then
+    sed -i '/<!-- Threat Feed Lists -->/,/<!-- Threat Feed Lists END -->/d' /var/ossec/etc/ossec.conf
+fi
+sed -i "/<ruleset>/a \\$add_to_ossec" /var/ossec/etc/ossec.conf
 
 # restart wazuh to apply changes
 systemctl restart wazuh-manager

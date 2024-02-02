@@ -74,7 +74,7 @@ try:
                 continue
 
             ip = match.group(1)
-            mask = match.group(2)
+            mask = int(match.group(2))
 
             if mask:  
                 # split ip into an array

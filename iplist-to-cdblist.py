@@ -2,7 +2,7 @@
 
 #
 # Convert IP list to CDB list
-# Copyright (C) 2016 Wazuh Inc.
+# Copyright (C) 2023 - AeshEmi1.
 #
 # This program is a free software; you can redistribute it
 # and/or modify it under the terms of the GNU General Public
@@ -18,8 +18,8 @@ cdir_conversion = {"32": 4, "24": 3, "16": 2, "8": 1}
 
 def calculate_ips(ip, mask):
     iplist = []
-    # Get the increment of the current ip range, this will be the amount subnets we create
-    increment = pow(2, 8-(mask%8))
+    # Get the increment of the current ip range, this will be the amount subnets we create. Subtract one because we add the first ip outside of the loop
+    increment = pow(2, 8-(mask%8)) - 1 
     # Set octets we will be working in
     if 0 < mask < 8:
         octet = 1
@@ -85,15 +85,16 @@ with open(argv[1]) as f:
 
         # split ip into an array
         ip = ip.split('.')
+        # Create the iplist array
+        iplist = []
         # Convert allowed masks (32, 24, 16, 8)
-        if mask in cdir_conversion:
+        if str(mask) in cdir_conversion:
             # Will make it look like this: 1.1.1
-            ip = '.'.join(ip[:cdir_conversion[mask]])
+            ip = '.'.join(ip[:cdir_conversion[str(mask)]])
             if mask != "32":
                 ip += "."
         # Add functionality for other masks above 8
         elif 0 < mask < 32:
-            iplist = []
             iplist = calculate_ips(ip, mask)
         # Make sure a bogus mask isn't passed
         else:

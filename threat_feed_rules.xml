@@ -52,14 +52,12 @@
     <rule id="970020" level="12" ignore="300">
       <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
       <list field="srcip" lookup="address_match_key">etc/lists/datacenters_and_vpns</list>
-
       <description>Accepted connection from a datacenter or VPN detected.</description>
     </rule>
 
     <rule id="970021" level="6">
       <if_sid>91531</if_sid>
       <list field="office365.SenderIp" lookup="address_match_key">etc/lists/datacenters_and_vpns</list>
-
       <description>Office 365: Mail from a datacenter or VPN detected.</description>
       <group>office365,</group>
     </rule>
@@ -68,7 +66,6 @@
       <if_sid>91531</if_sid>
       <list field="office365.ClientIP" lookup="address_match_key">etc/lists/datacenters_and_vpns</list>
       <field name="office365.Operation">UserLoggedIn</field>
-
       <description>Office 365: Successful login from a datacenter or VPN detected.</description>
       <group>office365,</group>
     </rule>
@@ -76,7 +73,6 @@
     <rule id="970023" level="12" ignore="600">
       <if_sid>91531</if_sid>
       <list field="office365.ClientIP" lookup="address_match_key">etc/lists/datacenters_and_vpns</list>
-
       <field name="office365.Operation">!UserLoggedIn</field>
       <description>Office 365: Activity from a datacenter or VPN detected.</description>
       <group>office365,</group>
@@ -85,7 +81,6 @@
     <rule id="970024" level="12" ignore="600">
       <if_sid>91531</if_sid>
       <list field="office365.ClientIPAddress" lookup="address_match_key">etc/lists/datacenters_and_vpns</list>
-
       <description>Office 365: Activity from a datacenter or VPN detected.</description>
       <group>office365,</group>
     </rule>
@@ -93,7 +88,6 @@
     <rule id="970025" level="12" ignore="65">
       <if_sid>301000</if_sid>
       <list field="fortinet.remip" lookup="address_match_key">etc/lists/datacenters_and_vpns</list>
-
       <description>Fortinet: Connection/Login from a datacenter or VPN detected.</description>
       <group>Fortinet,</group>
     </rule>
@@ -101,7 +95,6 @@
     <rule id="970026" level="12" ignore="600">
       <if_sid>60000</if_sid>
       <list field="win.eventdata.ipAddress" lookup="address_match_key">etc/lists/datacenters_and_vpns</list>
-
       <description>Windows: Connection from a datacenter or VPN detected. If the IP address is a private IP, then this is a false positive.</description>
       <group>windows,</group>
     </rule>
@@ -368,56 +361,56 @@
       <list field="dstip" lookup="address_match_key">etc/lists/firehol_level3</list>
       <description>Connection to a malicious IP found in FireHOL's level 3 threat feed detected.</description>
     </rule>
-
-    <rule id="970502" level="6">
-      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
-      <list field="dstip" lookup="address_match_key">etc/lists/datacenters</list>
-      <description>Connection to a datacenter or VPN IP detected.</description>
-    </rule>
-
-    <rule id="970503" level="12">
-      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
-      <list field="dstip" lookup="address_match_key">etc/lists/china</list>
-      <description>Connection to China detected.</description>
-    </rule>
-
-    <rule id="970504" level="12">
-      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
-      <list field="dstip" lookup="address_match_key">etc/lists/russia</list>
-      <description>Connection to Russia detected.</description>
-    </rule>
-
-    <rule id="970505" level="12">
-      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
-      <list field="dstip" lookup="address_match_key">etc/lists/iran</list>
-      <description>Connection to Iran detected.</description>
-    </rule>
-
-    <rule id="970506" level="12">
-      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
-      <list field="dstip" lookup="address_match_key">etc/lists/north_korea</list>
-      <description>Connection to North Korea detected.</description>
-    </rule>
-
-    <rule id="970750" level="15">
+    
+    <rule id="970502" level="9">
     <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
       <list field="dstip" lookup="address_match_key">etc/lists/firehol_level2</list>
       <description>Connection to a malicious IP found in Firehol's level 2 threat feed detected.</description>
     </rule>
 
-    <rule id="970751" level="15">
+    <rule id="970503" level="9">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="dstip" lookup="address_match_key">etc/lists/datacenters_and_vpns</list>
+      <description>Connection to a datacenter or VPN IP detected.</description>
+    </rule>
+
+    <rule id="970504" level="12" ignore="600">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="dstip" lookup="address_match_key">etc/lists/china</list>
+      <description>Connection to China detected.</description>
+    </rule>
+
+    <rule id="970505" level="12" ignore="600">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="dstip" lookup="address_match_key">etc/lists/russia</list>
+      <description>Connection to Russia detected.</description>
+    </rule>
+
+    <rule id="970506" level="12" ignore="600">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="dstip" lookup="address_match_key">etc/lists/iran</list>
+      <description>Connection to Iran detected.</description>
+    </rule>
+
+    <rule id="970507" level="12" ignore="600">
+      <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
+      <list field="dstip" lookup="address_match_key">etc/lists/north_korea</list>
+      <description>Connection to North Korea detected.</description>
+    </rule>
+
+    <rule id="970750" level="15" ignore="600">
       <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
       <list field="dstip" lookup="address_match_key">etc/lists/alienvault_reputation</list>
       <description>Connection to a malicious IP found in Alienvault's threat feed detected.</description>
     </rule>
 
-    <rule id="970752" level="15">
+    <rule id="970751" level="15" ignore="600">
       <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
       <list field="dstip" lookup="address_match_key">etc/lists/tor_exits_7d</list>
       <description>Connection to a TOR exit node detected.</description>
     </rule>
 
-    <rule id="970753" level="15">
+    <rule id="970752" level="15" ignore="600">
       <if_group>Fortinet|syslog|syslog-ng|wazuh|windows|ms-graph|office365|openvpn|honeypot</if_group>
       <list field="dstip" lookup="address_match_key">etc/lists/c2</list>
       <description>Connection to a known C2 server detected.</description>
@@ -449,7 +442,7 @@
     <rule id="971003" level="6">
       <if_group>threat_feeds_inbound</if_group>
       <field name="fortinet.action">ssl-login-fail</field>
-      <description>Fortinet: VPN login failure from a malicious IP Blocked.</description>
+      <description>Fortinet: VPN login failure from a malicious IP.</description>
       <group>Fortinet,</group>
     </rule>
 
@@ -475,7 +468,7 @@
     </rule>
 
     <rule id="971007" level="12" ignore="65">
-      <if_group>971006</if_group>
+      <if_sid>971006</if_sid>
       <field name="office365.LogonError">UserStrongAuthClientAuthNRequiredInterrupt</field>
       <description>Office 365: Login attempt from a malicious IP thwarted by MFA.</description>
       <group>office365,threat_feeds_inbound,</group>
@@ -483,7 +476,15 @@
     
     <rule id="971008" level="6">
       <if_group>threat_feeds_inbound</if_group>
-      <field name="office365.policy_type">local-in-policy</field>
+      <field name="fortinet.policy_type" type="pcre2">^local-in-policy$</field>
       <description>Temporary local-in policy override.</description>
+      <group>Fortinet,</group>
+    </rule>
+
+    <rule id="971009" level="6">
+      <if_group>threat_feeds_inbound</if_group>
+      <field name="fortinet.log_description" type="pcre2">^Admin login failed$</field>
+      <description>Fortinet: Malicious IP failed to login to firewall through the web interface.</description>
+      <group>Fortinet,</group>
     </rule>
 </group>

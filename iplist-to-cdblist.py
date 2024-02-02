@@ -9,7 +9,6 @@
 # License (version 2) as published by the FSF - Free Software
 # Foundation.
 #
-# This allows for any subnet mask to work with cdb lists, rather than just 32, 24, 16, and 8.
 
 import re
 from sys import exit, argv
@@ -31,7 +30,7 @@ def calculate_ips(ip, mask):
         octet = 4
 
     # Go up one mask for subnetting
-    round_up_mask = 8((8+mask) // 8)
+    round_up_mask = 8 * ((8+mask) // 8)
     
     # Append first ip to iplist
     if mask < 24:

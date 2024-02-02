@@ -16,7 +16,7 @@ curl https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/geolite2_
 curl https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/geolite2_country/country_kp.netset -o /var/ossec/etc/lists/north_korea.netset
 
 # Download wazuh converter tool
-curl https://wazuh.com/resources/iplist-to-cdblist.py -o /tmp/iplist-to-cdblist.py
+curl https://raw.githubusercontent.com/AeshEmi1/threat_feeds_wazuh/main/iplist-to-cdblist.py -o /tmp/iplist-to-cdblist.py
 
 # Combine TOR lists
 sort -u /var/ossec/etc/lists/tor_exits.ipset /var/ossec/etc/lists/tor_exits_dan.ipset > /var/ossec/etc/lists/tor_exits_7d.ipset

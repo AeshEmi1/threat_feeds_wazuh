@@ -5,7 +5,7 @@ rm -r /tmp/threat_feed_lists/*
 
 # Download latest IP Reputation lists
 curl https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/proxylists_7d.ipset -o /tmp/threat_feed_lists/open_proxies.ipset
-curl https://raw.githubusercontent.com/X4BNet/lists_vpn/main/output/vpn/ipv4.txt -o /tmp/threat_feed_lists/datacenters_and_vpns.ipset
+curl https://raw.githubusercontent.com/X4BNet/lists_vpn/main/output/datacenter/ipv4.txt -o /tmp/threat_feed_lists/datacenters_and_vpns.ipset
 curl https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_level3.netset -o /tmp/threat_feed_lists/firehol_level3.netset
 curl https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_level2.netset -o /tmp/threat_feed_lists/firehol_level2.netset
 curl https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/alienvault_reputation.ipset -o /tmp/threat_feed_lists/alienvault_reputation.ipset

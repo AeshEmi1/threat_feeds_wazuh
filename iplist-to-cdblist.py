@@ -76,25 +76,28 @@ with open(argv[1]) as f:
 
         if not match:  # Read just lines that start with an IP
             continue
-
+        
         ip = match.group(1)
-        mask = int(match.group(2))
-        if mask:  
-            # split ip into an array
-            ip = ip.split('.')
-            # Convert allowed masks (32, 24, 16, 8)
-            if mask in cdir_conversion:
-                # Will make it look like this: 1.1.1
-                ip = '.'.join(ip[:cdir_conversion[mask]])
-                if mask != "32":
-                    ip += "."
-            # Add functionality for other masks above 8
-            elif 0 < mask < 32:
-                iplist = []
-                iplist = calculate_ips(ip, mask)
-            # Make sure a bogus mask isn't passed
-            else:
-                continue
+        if not match.group(2):
+            mask = 32
+        else:
+            mask = int(match.group(2))
+
+        # split ip into an array
+        ip = ip.split('.')
+        # Convert allowed masks (32, 24, 16, 8)
+        if mask in cdir_conversion:
+            # Will make it look like this: 1.1.1
+            ip = '.'.join(ip[:cdir_conversion[mask]])
+            if mask != "32":
+                ip += "."
+        # Add functionality for other masks above 8
+        elif 0 < mask < 32:
+            iplist = []
+            iplist = calculate_ips(ip, mask)
+        # Make sure a bogus mask isn't passed
+        else:
+            continue
 
         ip += ":"  # CDB List format
 

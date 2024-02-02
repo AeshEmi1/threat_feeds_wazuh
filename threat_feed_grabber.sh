@@ -1,6 +1,6 @@
 #!/bin/bash
 # Create temp directory for threat feed lists
-mkdir -p /tmp/threat_feed_lists;
+mkdir -p /tmp/threat_feed_lists
 rm -r /tmp/threat_feed_lists/*
 
 # Download latest IP Reputation lists

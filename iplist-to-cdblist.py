@@ -19,7 +19,7 @@ cdir_conversion = {"32": 4, "24": 3, "16": 2, "8": 1}
 def calculate_ips(ip, mask):
     iplist = []
     # Get the increment of the current ip range, this will be the amount subnets we create
-    increment = 2^mask
+    increment = pow(2, 8-(mask%8))
     # Set octets we will be working in
     if 0 < mask < 8:
         octet = 1
@@ -44,7 +44,7 @@ def calculate_ips(ip, mask):
     # Loop to generate the IPs
     for _ in range(increment):
         # Add one to the ip address octet we're working in
-        current_octet_value = int(ip[octet-1]) + 1
+        ip[octet-1] = str(int(ip[octet-1]) + 1)
         ip_add = '.'.join(ip[:cdir_conversion[str(round_up_mask)]])
         if mask < 24:
             # Add the added subnet to the iplist
